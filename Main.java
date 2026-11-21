@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +9,13 @@ public class Main {
         System.out.print("Masukkan nama nasabah: ");
         String nama = input.nextLine().trim();
 
-        return nama.isEmpty() ? "Tanpa Nama" : nama;
+        while (nama.isEmpty()) {
+            System.out.println("Nama tidak boleh kosong!");
+            System.out.print("Masukkan nama nasabah: ");
+            nama = input.nextLine().trim();
+        }
+
+        return nama;
     }
 
     public static double inputBerat(String jenis) {
@@ -23,7 +30,7 @@ public class Main {
         double berat = input.nextDouble();
 
         while (!Double.isFinite(berat) || berat < 0) {
-            System.out.println("Berat harus berupa angka, coba lagi.");
+            System.out.println("Berat harus berupa angka nol atau lebih. Coba lagi!");
             System.out.print("Masukkan berat " + jenis + " (kg): ");
 
             while (!input.hasNextDouble()) {
@@ -50,7 +57,7 @@ public class Main {
         double jumlah = input.nextDouble();
 
         while (!Double.isFinite(jumlah) || jumlah < 0) {
-            System.out.println("Nominal harus berupa angka tidak negatif!");
+            System.out.println("Penarikan tidak valid. Coba lagi!");
             System.out.print("Masukkan nominal penarikan: Rp");
 
             while (!input.hasNextDouble()) {
@@ -65,27 +72,39 @@ public class Main {
         return jumlah;
     }
 
+    public static String inputLanjut() {
+        System.out.print("\nIngin melakukan transaksi lagi? (Y/T): ");
+        String lanjut = input.nextLine().trim();
+
+        while (!lanjut.equalsIgnoreCase("Y")
+                && !lanjut.equalsIgnoreCase("T")) {
+            System.out.println("Masukkan Y atau T!");
+            System.out.print("Ingin melakukan transaksi lagi? (Y/T): ");
+            lanjut = input.nextLine().trim();
+        }
+
+        return lanjut;
+    }
+
     public static void main(String[] args) {
 
-        String ulang;
+        String lanjut;
 
         do {
             System.out.println("\n===== BANK SAMPAH =====");
 
-            input.nextLine();
-
             String nama = inputNama();
+
+            double plastik = inputBerat("Plastik");
+            double kertas = inputBerat("Kertas");
+            double logam = inputBerat("Logam");
 
             Nasabah nasabah = new Nasabah(nama, 0);
             Setoran setoran = new Setoran();
 
-            double beratPlastik = inputBerat("Plastik");
-            double beratKertas = inputBerat("Kertas");
-            double beratLogam = inputBerat("Logam");
-
-            setoran.tambahSampah(new Plastik(beratPlastik));
-            setoran.tambahSampah(new Kertas(beratKertas));
-            setoran.tambahSampah(new Logam(beratLogam));
+            setoran.tambahSampah(new Plastik(plastik));
+            setoran.tambahSampah(new Kertas(kertas));
+            setoran.tambahSampah(new Logam(logam));
 
             nasabah.tambahSaldo(setoran.hitungTotalSetoran());
 
@@ -106,10 +125,10 @@ public class Main {
 
             System.out.printf("Saldo Akhir    : Rp%.0f%n", nasabah.getSaldo());
 
-            System.out.print("\nIngin melakukan transaksi lagi? (Y/T): ");
-            ulang = input.next();
+            input.nextLine();
+            lanjut = inputLanjut();
 
-        } while (ulang.equalsIgnoreCase("Y"));
+        } while (lanjut.equalsIgnoreCase("Y"));
 
         System.out.println("\nSistem berakhir, terima kasih");
 
