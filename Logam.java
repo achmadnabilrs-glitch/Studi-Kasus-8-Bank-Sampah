@@ -6,6 +6,7 @@ public class Logam extends Sampah {
 
     @Override
     public double hitungNilai() {
-        return getBerat() * 5000;
+        double nilaiLogam = getBerat() * 5000;
+        return nilaiLogam;
     }
 }

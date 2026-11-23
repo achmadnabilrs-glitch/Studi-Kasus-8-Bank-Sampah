@@ -1,10 +1,11 @@
-public class Nasabah {
-    private String nama;
-    private double saldo;
 
-    public Nasabah(String nama, double saldo) {
+public class Nasabah {
+
+    private String nama;
+    private double saldo = 0;
+
+    public Nasabah(String nama) {
         this.nama = nama;
-        this.saldo = saldo;
     }
 
     public String getNama() {
@@ -29,10 +30,12 @@ public class Nasabah {
 
         saldo -= berhasil ? jumlah : 0;
 
-        return !nominalValid
+        String ketPenarikan = !nominalValid
                 ? "Penarikan Ditolak! Minimal penarikan Rp20.000"
                 : !saldoCukup
                     ? "Penarikan Ditolak! Saldo tidak mencukupi"
                     : "Penarikan Berhasil";
+
+        return ketPenarikan;
     }
 }

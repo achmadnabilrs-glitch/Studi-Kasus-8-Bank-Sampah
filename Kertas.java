@@ -6,6 +6,7 @@ public class Kertas extends Sampah {
 
     @Override
     public double hitungNilai() {
-        return getBerat() * 1500;
+        double nilaiKertas = getBerat() * 1500;
+        return nilaiKertas;
     }
 }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Setoran {
+
     private ArrayList<Sampah> daftarSampah;
 
     public Setoran() {
@@ -8,44 +9,52 @@ public class Setoran {
     }
 
     public void tambahSampah(Sampah sampah) {
-    boolean valid = sampah.getBerat() > 0;
+        boolean valid = sampah.getBerat() > 0;
 
-    daftarSampah.addAll(
-        valid ? java.util.List.of(sampah) : java.util.List.of()
-    );
-}
-
-    public double hitungNilai() {
-        double total = 0;
-
-        for (Sampah sampah : daftarSampah) {
-            total += sampah.hitungNilai();
-        }
-
-        return total;
+        daftarSampah.addAll(
+            valid ? java.util.List.of(sampah)
+                  : java.util.List.of()
+        );
     }
 
-    public double hitungTotalBerat() {
-        double total = 0;
+    public double hitungHargaSetoranSampah() {
+        double hargaSetoranSampah = 0;
 
         for (Sampah sampah : daftarSampah) {
-            total += sampah.getBerat();
+            hargaSetoranSampah += sampah.hitungNilai();
         }
 
-        return total;
+        return hargaSetoranSampah;
+    }
+
+    public double hitungTotalBeratSampah() {
+        double totalBeratSampah = 0;
+
+        for (Sampah sampah : daftarSampah) {
+            totalBeratSampah += sampah.getBerat();
+        }
+
+        return totalBeratSampah;
     }
 
     public double hitungBonus() {
-        return hitungTotalBerat() >= 10
-                ? hitungNilai() * 0.05
+        double bonus = hitungTotalBeratSampah() >= 10
+                ? hitungHargaSetoranSampah() * 0.05
                 : 0;
+
+        return bonus;
     }
 
-    public double hitungTotalSetoran() {
-        return hitungNilai() + hitungBonus();
+    public double hitungSetoranAkhirDiterima() {
+        double setoranAkhirDiterima =
+                hitungHargaSetoranSampah() + hitungBonus();
+
+        return setoranAkhirDiterima;
     }
 
-    public int hitungJumlahSetoran() {
-        return daftarSampah.size();
+    public int hitungJumlahJenisSampah() {
+        int jumlahJenisSampah = daftarSampah.size();
+
+        return jumlahJenisSampah;
     }
 }

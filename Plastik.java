@@ -6,6 +6,7 @@ public class Plastik extends Sampah {
 
     @Override
     public double hitungNilai() {
-        return getBerat() * 2000;
+        double nilaiPlastik = getBerat() * 2000;
+        return nilaiPlastik;
     }
 }
