@@ -1,4 +1,3 @@
-
 public class Nasabah {
 
     private String nama;
@@ -26,15 +25,16 @@ public class Nasabah {
 
         boolean saldoCukup = jumlah <= saldo;
 
-        boolean berhasil = nominalValid && saldoCukup;
+        String ketPenarikan;
 
-        saldo -= berhasil ? jumlah : 0;
-
-        String ketPenarikan = !nominalValid
-                ? "Penarikan Ditolak! Minimal penarikan Rp20.000"
-                : !saldoCukup
-                    ? "Penarikan Ditolak! Saldo tidak mencukupi"
-                    : "Penarikan Berhasil";
+        if (!nominalValid) {
+            ketPenarikan = "Penarikan Ditolak! Minimal penarikan Rp20.000";
+        } else if (!saldoCukup) {
+            ketPenarikan = "Penarikan Ditolak! Saldo tidak mencukupi";
+        } else {
+            saldo -= jumlah;
+            ketPenarikan = "Penarikan Berhasil";
+        }
 
         return ketPenarikan;
     }

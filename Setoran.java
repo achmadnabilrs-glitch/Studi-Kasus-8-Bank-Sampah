@@ -11,10 +11,9 @@ public class Setoran {
     public void tambahSampah(Sampah sampah) {
         boolean valid = sampah.getBerat() > 0;
 
-        daftarSampah.addAll(
-            valid ? java.util.List.of(sampah)
-                  : java.util.List.of()
-        );
+        if (valid) {
+            daftarSampah.add(sampah);
+        }
     }
 
     public double hitungHargaSetoranSampah() {
@@ -38,16 +37,24 @@ public class Setoran {
     }
 
     public double hitungBonus() {
-        double bonus = hitungTotalBeratSampah() >= 10
-                ? hitungHargaSetoranSampah() * 0.05
-                : 0;
+        double totalBeratSampah = hitungTotalBeratSampah();
+        double hargaSetoranSampah = hitungHargaSetoranSampah();
+        double bonus;
+
+        if (totalBeratSampah >= 10) {
+            bonus = hargaSetoranSampah * 0.05;
+        } else {
+            bonus = 0;
+        }
 
         return bonus;
     }
 
     public double hitungSetoranAkhirDiterima() {
-        double setoranAkhirDiterima =
-                hitungHargaSetoranSampah() + hitungBonus();
+        double hargaSetoranSampah = hitungHargaSetoranSampah();
+        double bonus = hitungBonus();
+
+        double setoranAkhirDiterima = hargaSetoranSampah + bonus;
 
         return setoranAkhirDiterima;
     }

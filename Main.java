@@ -18,33 +18,26 @@ public class Main {
     }
 
     public static double inputAngka(String pesan) {
-        System.out.print(pesan);
+        double angka;
 
-        while (!input.hasNextDouble()) {
-            System.out.println("Input harus berupa angka, coba lagi!");
-            input.nextLine();
-            System.out.print(pesan);
-        }
-
-        double angka = input.nextDouble();
-
-        while (!Double.isFinite(angka) || angka < 0) {
-            System.out.println("Angka harus nol atau lebih, coba lagi!");
-            input.nextLine();
+        while (true) {
             System.out.print(pesan);
 
-            while (!input.hasNextDouble()) {
+            if (input.hasNextDouble()) {
+                angka = input.nextDouble();
+                input.nextLine();
+
+                if (Double.isFinite(angka) && angka >= 0) {
+                    return angka;
+                } else {
+                    System.out.println("Angka harus nol atau lebih, coba lagi!");
+                }
+
+            } else {
                 System.out.println("Input harus berupa angka, coba lagi!");
                 input.nextLine();
-                System.out.print(pesan);
             }
-
-            angka = input.nextDouble();
         }
-
-        input.nextLine();
-
-        return angka;
     }
 
     public static boolean inputLanjut() {
@@ -58,7 +51,13 @@ public class Main {
             pilihan = input.nextLine().trim();
         }
 
-        boolean lanjut = pilihan.equalsIgnoreCase("Y");
+        boolean lanjut;
+
+        if (pilihan.equalsIgnoreCase("Y")) {
+            lanjut = true;
+        } else {
+            lanjut = false;
+        }
 
         return lanjut;
     }
@@ -102,7 +101,8 @@ public class Main {
             setoran.tambahSampah(new Kertas(kertas));
             setoran.tambahSampah(new Logam(logam));
 
-            nasabah.tambahSaldo(setoran.hitungSetoranAkhirDiterima());
+            double totalSetoran = setoran.hitungSetoranAkhirDiterima();
+            nasabah.tambahSaldo(totalSetoran);
 
             cetakStruk(nasabah, setoran);
 
