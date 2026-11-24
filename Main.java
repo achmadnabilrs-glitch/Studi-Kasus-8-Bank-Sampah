@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Main {
@@ -41,22 +42,21 @@ public class Main {
     }
 
     public static boolean inputLanjut() {
-        System.out.print("\nIngin melakukan transaksi lagi? (Y/T): ");
-        String pilihan = input.nextLine().trim();
-
-        while (!pilihan.equalsIgnoreCase("Y")
-                && !pilihan.equalsIgnoreCase("T")) {
-            System.out.println("Masukkan Y atau T!");
-            System.out.print("Ingin melakukan transaksi lagi? (Y/T): ");
-            pilihan = input.nextLine().trim();
-        }
-
         boolean lanjut;
 
-        if (pilihan.equalsIgnoreCase("Y")) {
-            lanjut = true;
-        } else {
-            lanjut = false;
+        while (true) {
+            System.out.print("\nIngin melakukan transaksi lagi? (Y/T): ");
+            String pilihan = input.nextLine().trim().toUpperCase();
+
+            if (pilihan.equals("Y")) {
+                lanjut = true;
+                break;
+            } else if (pilihan.equals("T")) {
+                lanjut = false;
+                break;
+            } else {
+                System.out.println("Masukkan Y atau T!");
+            }
         }
 
         return lanjut;
@@ -69,7 +69,6 @@ public class Main {
         double hargaSetoranSampah = setoran.hitungHargaSetoranSampah();
         double bonus = setoran.hitungBonus();
         double setoranAkhirDiterima = setoran.hitungSetoranAkhirDiterima();
-        double saldo = nasabah.getSaldo();
 
         System.out.println("\n===== STRUK SETORAN =====");
         System.out.println("Nama Nasabah   : " + nama);
@@ -78,7 +77,6 @@ public class Main {
         System.out.printf("Nilai Sampah   : Rp%.0f%n", hargaSetoranSampah);
         System.out.printf("Bonus          : Rp%.0f%n", bonus);
         System.out.printf("Total Setoran  : Rp%.0f%n", setoranAkhirDiterima);
-        System.out.printf("Saldo          : Rp%.0f%n", saldo);
     }
 
     public static void main(String[] args) {
